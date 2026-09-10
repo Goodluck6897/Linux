@@ -34,9 +34,45 @@ journalctl -k -p err
 # 10. Search
 journalctl | grep -i error
 --
+```
 journalctl -u sshd
 journalctl -u sshd -f
 journalctl -u sshd --since today
 journalctl -p err
 journalctl -b -1
 journalctl -k -p err
+```
+
+  journalctl does not automatically collect every Java application's log file.
+It shows logs that are sent to systemd-journal
+
+1. Java application runs as a systemd service — most common
+
+Suppose you have:
+
+/opt/myapp/myapp.jar
+
+and a systemd unit:
+```
+[Unit]
+Description=My Java Application
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/java -jar /opt/myapp/myapp.jar
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+When Java writes to stdout/stderr:
+```
+System.out.println("Application started");
+System.err.println("Database connection failed");
+```
+systemd captures that output and sends it to journald.
+
+Then:
+
+journalctl -u myapp
