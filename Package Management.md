@@ -80,7 +80,8 @@ dnf list installed httpd
 ```
 1. Show what httpd needs to run (Dependencies)
    #dnf repoquery --requires httpd
-2. Show what else on your server depends on httpd (Reverse Dependencies)If httpd is already installed and you want to know what other packages
+2. Show what else on your server depends on httpd (Reverse Dependencies)If httpd is already installed and you want to know what other
+   packages
    rely on it (meaning if you delete httpd, these apps will break),
    #dnf repoquery --whatrequires httpd
 3. Check what would be installed (Simulated Install)If you have not installed httpd yet but want to see a neat,
