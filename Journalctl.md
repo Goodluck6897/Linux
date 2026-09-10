@@ -33,7 +33,7 @@ journalctl -k -p err
 
 # 10. Search
 journalctl | grep -i error
-
+--
 
 journalctl -u sshd
 journalctl -u sshd -f
