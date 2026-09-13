@@ -1039,3 +1039,8 @@ chronyc makestep
  ↓
 VERIFY
 ```
+
+makestep 1.0 3 is the more common/recommended setting — it allows the clock to quickly sync at boot, but avoids sudden time jumps during normal operation (which can disrupt applications like databases or logging).
+
+
+makestep 1.0 0 is useful in environments where the clock can drift significantly at any time (e.g., virtual machines that get suspended/resumed) and you always want immediate correction.
