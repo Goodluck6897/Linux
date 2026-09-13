@@ -347,3 +347,44 @@ tail -f /var/log/myapp/application.log
 - **Mention cloud context** — if applicable, mention Security Groups, VPC DNS settings (e.g., AWS `enableDnsSupport`), Route 53 private hosted zones.
 - **End with verification** — always confirm the fix works at both the DNS and application level.
 - **Communicate** — mention that you'd keep the application team informed throughout the process.
+
+
+############
+# 50. Golden Rule for L3 DNS Troubleshooting
+
+Always separate **name resolution** from **network/application connectivity**:
+
+```text
+             Application Issue
+                    |
+                    v
+             Can DNS resolve?
+              /            \
+            NO              YES
+            |                |
+            v                v
+      Troubleshoot DNS   Check connectivity
+                             |
+                             v
+                       Correct IP/Port?
+                         /        \
+                       NO          YES
+                       |            |
+                       v            v
+                  Network/DNS   Application
+                    issue         issue
+```
+
+The key commands to remember for the interview are:
+
+```bash
+cat /etc/resolv.conf
+grep '^hosts:' /etc/nsswitch.conf
+getent hosts hostname
+dig hostname
+dig @DNS_SERVER hostname
+dig -x IP
+ip route
+nc -vz DNS_SERVER 53
+```
+###############
