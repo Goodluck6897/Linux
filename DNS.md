@@ -968,6 +968,7 @@ Follow this sequence:
           |
           v
 8. Check firewall
+Run sudo iptables -L -n -v | grep :53 or sudo iptables -S | grep 53 to see if there are any explicit DROP or REJECT rules targeting outbound destination port 53.
           |
           v
 9. Check DNS server
