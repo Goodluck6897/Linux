@@ -527,7 +527,13 @@ First:
 ```bash
 journalctl --list-boots
 ```
+[root@rhel ~]# journalctl --list-boots
+IDX BOOT ID                          FIRST ENTRY                 LAST ENTRY                 
+  0 b7b892e47dda4ebaa4cfd4b2d7e4c330 Sun 2026-09-13 04:55:45 PDT Sun 2026-09-13 06:50:09 PDT
+[root@rhel ~]# 
 
+FIRST ENTRY - last reboot time
+LAST ENTRY - latest log time
 Then inspect previous boot:
 
 ```bash
