@@ -644,29 +644,89 @@ Linux NSS/resolver configuration
 
 ---
 
-# 24. `resolvectl`
+# 24. `nmcli
 
-On systems using `systemd-resolved`:
+# List connections
+nmcli connection show
 
-```bash
-resolvectl status
-```
+# List active connections
+nmcli connection show --active
 
-DNS configuration:
+# List network devices
+nmcli device status
 
-```bash
-resolvectl dns
-```
+# Detailed device information
+nmcli device show ens160
 
-Query:
+# Detailed connection information
+nmcli connection show ens160
 
-```bash
-resolvectl query google.com
-```
+# Bring connection up
+nmcli connection up ens160
 
-Important:
+# Bring connection down
+nmcli connection down ens160
 
-> Do not assume every RHEL server uses `systemd-resolved`. Always check the actual resolver configuration.
+# Connect device
+nmcli device connect ens160
+
+# Disconnect device
+nmcli device disconnect ens160
+
+# Modify connection
+nmcli connection modify ens160 ...
+
+# Add connection
+nmcli connection add ...
+
+# Delete connection
+nmcli connection delete ens160
+The complete troubleshooting flow
+
+This is what I want you to memorize for your Linux interview:
+             INTERNET NOT WORKING
+                     |
+                     v
+          nmcli device status
+                     |
+                     v
+             Is interface UP?
+               /          \
+             NO            YES
+             |              |
+      nmcli con up       Check IP
+                           |
+                           v
+             nmcli dev show ens160
+                           |
+                           v
+                     Check gateway
+                           |
+                           v
+                       ip route
+                           |
+                           v
+                  ping <gateway>
+                    /          \
+                  FAIL         OK
+                   |            |
+             Fix network      ping 8.8.8.8
+             /gateway            |
+                                 v
+                         Does 8.8.8.8 work?
+                           /          \
+                         NO            YES
+                         |              |
+                   Routing/firewall   DNS problem
+                                      |
+                                      v
+                              nmcli dev show
+                                      |
+                                      v
+                                      DNS
+                                      |
+                                      v
+                              nslookup google.com
 
 ---
 
